@@ -14,7 +14,6 @@ public class LandingPage extends BasePage{
 
     public String GetURL() {
         return(driver.getCurrentUrl());
-
     }
 
     public void GoToAbout() {

@@ -66,8 +66,27 @@ public class LoginRegisterTests {
     @Test
     @Order(2)
     @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Register with username and password and login with registered parameters")
+    public void RegisterAndLoginTest1 () {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        String validUserName = "Larry22";
+        String validPassword = "22yrraL";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.RegisterBasic(validUserName,validPassword,"","");
+        Assertions.assertTrue(loginPage.RegisterAlertIsDisplayed());
+        loginPage.LoginFromRegister();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+    }
+
+
+    @Test
+    @Order(3)
+    @Severity(SeverityLevel.NORMAL)
     @DisplayName("Register with username and password and try to login with wrong password")
-    public void RegisterAndLoginTest () {
+    public void RegisterAndLoginTest2 () {
         loginPage = new LoginPage(driver);
         String validUserName = "Pisti22";
         String validPassword = "22itsiP";
@@ -76,18 +95,19 @@ public class LoginRegisterTests {
         loginPage.AcceptTermsAndConditions();
         loginPage.RegisterBasic(validUserName,validPassword,"","");
         Assertions.assertTrue(loginPage.RegisterAlertIsDisplayed());
+        loginPage.LoginFromRegister();
         loginPage.LoginFunction(validUserName, invalidPassword);
         Assertions.assertTrue(loginPage.LoginAlertIsDisplayed());
     }
 
     @Test
-    @Order(3)
+    @Order(4)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Try to login with wrong username")
     public void LoginTest1 () {
         loginPage = new LoginPage(driver);
         String invalidUserName = "Jackie";
-        String validPassword = "22itsiP";
+        String validPassword = "22yrraL";
         loginPage.Navigate();
         loginPage.AcceptTermsAndConditions();
         loginPage.LoginFunction(invalidUserName, validPassword);
@@ -95,13 +115,14 @@ public class LoginRegisterTests {
     }
 
     @Test
-    @Order(4)
+    @Disabled
+    @Order(5)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Try to login with valid username and password")
     public void LoginTest2 () {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
-        String validUserName = "Pisti22";
+        String validUserName = "Larry22";
         String validPassword = "22itsiP";
         loginPage.Navigate();
         loginPage.AcceptTermsAndConditions();
@@ -110,9 +131,10 @@ public class LoginRegisterTests {
     }
 
 
-    @AfterEach
-    public void TearDown () {
+   @AfterEach
+   public void TearDown () {
         driver.quit();
-    }
+   }
+
 
 }

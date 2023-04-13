@@ -3,6 +3,9 @@ package org.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
+import java.util.concurrent.TimeUnit;
+
+
 public class LoginPage extends BasePage{
 
 
@@ -22,6 +25,7 @@ public class LoginPage extends BasePage{
     private final By REGISTER_ALERT = By.id("register-alert");
 
     private final By LOGIN_BUTTON_ABOVE = By.xpath("//div[@id='register']/button[@id='login-form-button']");
+    //private final By LOGIN_BUTTON_ABOVE = By.xpath("//div[@id='register']/button[@onclick='showLogin()']");
 
     private final By LOGIN_USERNAME_FIELD = By.id("email");
     private final By LOGIN_PASSWORD_FIELD = By.id("password");
@@ -55,12 +59,20 @@ public class LoginPage extends BasePage{
         return(driver.findElement(REGISTER_ALERT).isDisplayed());
     }
 
-    public void LoginFunction(String username, String password) {
+    public void LoginFromRegister () {
         driver.findElement(LOGIN_BUTTON_ABOVE).click();
+    }
+
+    public void LoginFunction(String username, String password) {
+        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.findElement(LOGIN_USERNAME_FIELD).click();
         driver.findElement(LOGIN_USERNAME_FIELD).sendKeys(username);
+        driver.findElement(LOGIN_PASSWORD_FIELD).click();
         driver.findElement(LOGIN_PASSWORD_FIELD).sendKeys(password);
         driver.findElement(LOGIN_BUTTON_AFTERFILLED).click();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
+
     public boolean LoginAlertIsDisplayed () {
         return(driver.findElement(LOGIN_ALERT).isDisplayed());
     }

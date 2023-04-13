@@ -11,8 +11,6 @@ import java.util.List;
 
 public class AboutPage extends BasePage{
 
-    //Actions actions = new Actions(driver);
-
     public AboutPage(WebDriver driver) {
         super(driver);
     }
