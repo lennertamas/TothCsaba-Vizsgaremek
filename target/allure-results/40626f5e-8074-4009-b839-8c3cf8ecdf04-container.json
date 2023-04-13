@@ -1,0 +1,1 @@
+{"uuid":"40626f5e-8074-4009-b839-8c3cf8ecdf04","name":"Try to login with wrong username","children":["3420f195-2e98-4558-99f6-bd0e6ed143c0"],"befores":[{"name":"setUp","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1681404205003,"stop":1681404205809}],"afters":[],"links":[],"start":1681404204998,"stop":1681404215543}

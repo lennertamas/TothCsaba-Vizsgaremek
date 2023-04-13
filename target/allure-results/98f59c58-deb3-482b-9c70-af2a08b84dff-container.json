@@ -1,0 +1,1 @@
+{"uuid":"98f59c58-deb3-482b-9c70-af2a08b84dff","name":"Try to login with valid username and password","children":["ce62f5eb-ec5f-4463-8959-d6b88162187e"],"befores":[{"name":"setUp","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1681403918279,"stop":1681403919078}],"afters":[],"links":[],"start":1681403918274,"stop":1681403922358}

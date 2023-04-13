@@ -1,0 +1,1 @@
+{"uuid":"bb5d7b57-df96-4e45-a6c7-c4b1154dfd1b","name":"Register without parameters","children":["4f208455-a216-4abb-9073-88b7532e3b4b"],"befores":[{"name":"setUp","status":"passed","stage":"finished","steps":[],"attachments":[],"parameters":[],"start":1681403898285,"stop":1681403903522}],"afters":[],"links":[],"start":1681403898192,"stop":1681403908685}
