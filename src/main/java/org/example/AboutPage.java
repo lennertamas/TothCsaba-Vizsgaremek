@@ -7,7 +7,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class AboutPage extends BasePage{
 
@@ -17,6 +20,9 @@ public class AboutPage extends BasePage{
 
     public final By EXPERTISE_DATA = By.xpath("//ul[@class='site-expertise-list']/li");
     public final By MEMBERS_DATA = By.xpath("//div[@class='site-team-member-content']");
+
+    public final By MEMBERS_NAME = By.xpath("//*[@class='site-team-member-content']/h3");
+
 
     public String getExpertiseData () {
         List<WebElement> lines = driver.findElements(EXPERTISE_DATA);
@@ -44,4 +50,27 @@ public class AboutPage extends BasePage{
             }
         return result;
         }
+
+    public List<String> getMembersNameonly() {
+        WebElement body = driver.findElement(By.tagName("body"));
+        for (int i = 0; i < 3; i++) {
+            body.sendKeys(Keys.PAGE_DOWN);
+        }
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
+        List<WebElement> names = driver.findElements(MEMBERS_NAME);
+        List<String> nameList = new ArrayList<>();
+        for (WebElement name : names) {
+            String[] nameArray = name.getText().split("\n");
+            nameList.add(nameArray[0]);
+        }
+        return nameList;
+
+    }
+
+
+
+    //nyilván csak arraylist-be tudja kiolvasni
+    //azt alakítottam utána tömbbé
+    //utána assertArraysEquals
+
 }
