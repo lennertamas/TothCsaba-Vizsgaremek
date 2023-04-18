@@ -101,7 +101,7 @@ public class PaginationTest {
     @Test
     @Order(4)
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Checking If Click On Before Button Functions Perfectly")
+    @DisplayName("Checking If Click On Previous Button Functions Perfectly")
     public void clickPreviousTest() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
@@ -126,13 +126,59 @@ public class PaginationTest {
         String actual2 = landingPage.GetURL();
         String expected2 = "https://lennertamas.github.io/roxo/portfolio/";
         Assertions.assertEquals(expected2, actual2);
+    }
 
+    @Test
+    @Order(5)
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Checking If Click On First Button Functions Perfectly")
+    public void GetFirstPageNumberTest() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        portfolioPage.clickFirstPage();
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        int actual = portfolioPage.GetPageNumber();
+        Assertions.assertEquals(1, actual);
+    }
 
+    @Test
+    @Order(6)
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Checking If Click On First Page Button Directs To First Page")
+    public void clickFirstPageTest() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        portfolioPage.clickNext();
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        String actual = landingPage.GetURL();
+        String expected = "https://lennertamas.github.io/roxo/portfolio/page/2/";
+        Assertions.assertEquals(expected, actual);
+        portfolioPage.clickFirstPage();
+        String actual2 = landingPage.GetURL();
+        String expected2 = "https://lennertamas.github.io/roxo/portfolio/";
+        Assertions.assertEquals(expected2, actual2);
     }
 
 
     @Test
-    @Order(5)
+    @Order(7)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Get The Maximum Number Of Pages With Another Method")
     public void GetLastPageNumberTest2() throws InterruptedException {
@@ -153,7 +199,7 @@ public class PaginationTest {
 
 
     @Test
-    @Order(6)
+    @Order(8)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Getting The Number Of Products While Iterating Over Pages")
     public void PaginationTest2() throws InterruptedException {

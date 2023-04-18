@@ -87,7 +87,7 @@ public class DataOperationsTest {
     @Test
     @Order(4)
     @Severity(SeverityLevel.NORMAL)
-    @DisplayName("Read Comments And Related Data On About Page Test And Compare With File")
+    @DisplayName("Read Comments And Related Data On About Page And Compare With File")
     public void DataReadTest3 () throws InterruptedException, IOException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);

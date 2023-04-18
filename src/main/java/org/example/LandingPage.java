@@ -32,6 +32,8 @@ public class LandingPage extends BasePage {
     public final By PORTFOLIO_BUTTON = By.xpath("//nav/div/div/ul/li[3]/a");
     public final By BLOG_BUTTON = By.xpath("//nav/div/div/ul/li[4]/a");
 
+    public final By MESSAGE_BUTTON = By.xpath("//*[@data-text='Get in touch']");
+
 
     public String GetURL() {
         return (driver.getCurrentUrl());
@@ -46,6 +48,10 @@ public class LandingPage extends BasePage {
     }
     public void GoToBlog() {
         driver.findElement(BLOG_BUTTON).click();
+    }
+
+    public void GoToMessage() {
+        driver.findElement(MESSAGE_BUTTON).click();
     }
 
     public void writeCommentsToFile(List<Map<String, String>> commentList, String filePath) throws IOException {
@@ -104,7 +110,7 @@ public class LandingPage extends BasePage {
 
     public List<Map<String, String>> readCommentsFile() throws IOException {
         List<Map<String, String>> commentsFromFiles = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("tester.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("Comments.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(";");
@@ -116,7 +122,7 @@ public class LandingPage extends BasePage {
                     } else if (keyValue.length == 3) {
                         if (keyValue[0].trim().equals("Name")) {
                             String name = keyValue[1].trim() + "," + keyValue[2].trim();
-                            name = name.replaceFirst("^=", ""); // remove equals sign from beginning
+                            name = name.replaceFirst("=", "");
                             map.put("Name", name);
                         } else {
                             map.put(keyValue[0].trim(), keyValue[1].trim() + "," + keyValue[2].trim());
