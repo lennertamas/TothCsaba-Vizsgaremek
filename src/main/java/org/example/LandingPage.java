@@ -64,6 +64,7 @@ public class LandingPage extends BasePage {
         writer.close();
     }
 
+
     public List<Map<String, String>> getComments() throws InterruptedException, IOException {
         List<Map<String, String>> commentList = new ArrayList<>();
         scrollToElement(OPINION_AREA);
@@ -76,61 +77,23 @@ public class LandingPage extends BasePage {
             Map<String, String> person = new HashMap<>();
             person.put("Occupation", occupation);
             person.put("Comment", comment);
-            person.put("\"=Name", name);
+            person.put("Name", name);
             commentList.add(person);
         }
         return commentList;
 
     }
 
-    /*public List<Map<String, String>> readCommentsFile() throws IOException {
-        List<Map<String, String>> commentsFromFiles = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("Comments.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] parts = line.split(";");
-                Map<String, String> map = new HashMap<>();
-                for (String part : parts) {
-                    String[] keyValue = part.split("#");
-                    if (keyValue.length == 2) {
-                        map.put(keyValue[0].trim(), keyValue[1].trim());
-                    } else if (keyValue.length == 3) {
-                        map.put(keyValue[0].trim(), keyValue[1].trim() + "," + keyValue[2].trim());
-                    } else {
-                        return commentsFromFiles;
-                    }
-                }
-                commentsFromFiles.add(map);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return commentsFromFiles;
-    } */
-
     public List<Map<String, String>> readCommentsFile() throws IOException {
         List<Map<String, String>> commentsFromFiles = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("Comments.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("CommentList.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                String[] parts = line.split(";");
+                String[] parts = line.split("\\|");
                 Map<String, String> map = new HashMap<>();
-                for (String part : parts) {
-                    String[] keyValue = part.split("#");
-                    if (keyValue.length == 2) {
-                        map.put(keyValue[0].trim(), keyValue[1].trim());
-                    } else if (keyValue.length == 3) {
-                        if (keyValue[0].trim().equals("Name")) {
-                            String name = keyValue[1].trim() + "," + keyValue[2].trim();
-                            name = name.replaceFirst("=", "");
-                            map.put("Name", name);
-                        } else {
-                            map.put(keyValue[0].trim(), keyValue[1].trim() + "," + keyValue[2].trim());
-                        }
-                    } else {
-                        return commentsFromFiles;
-                    }
-                }
+                map.put("Name", parts[0]);
+                map.put("Occupation", parts[1]);
+                map.put("Comment", parts[2]);
                 commentsFromFiles.add(map);
             }
         } catch (IOException e) {
@@ -138,8 +101,6 @@ public class LandingPage extends BasePage {
         }
         return commentsFromFiles;
     }
-
-
 
 
 

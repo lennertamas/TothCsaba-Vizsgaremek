@@ -13,6 +13,9 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -37,7 +40,7 @@ public class PaginationTest {
     @Order(1)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Checking If First Page Is Displayed")
-    public void PaginationTest1() throws InterruptedException {
+    public void CheckFirstPage() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
         portfolioPage = new PortfolioPage(driver);
@@ -56,7 +59,7 @@ public class PaginationTest {
     @Order(2)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Checking If Click On Next Button Functions Perfectly")
-    public void clickNextTest() throws InterruptedException {
+    public void ClickNextTest() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
         portfolioPage = new PortfolioPage(driver);
@@ -102,7 +105,7 @@ public class PaginationTest {
     @Order(4)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Checking If Click On Previous Button Functions Perfectly")
-    public void clickPreviousTest() throws InterruptedException {
+    public void ClickPreviousTest() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
         portfolioPage = new PortfolioPage(driver);
@@ -154,7 +157,7 @@ public class PaginationTest {
     @Order(6)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Checking If Click On First Page Button Directs To First Page")
-    public void clickFirstPageTest() throws InterruptedException {
+    public void ClickFirstPageTest() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
         portfolioPage = new PortfolioPage(driver);
@@ -202,7 +205,7 @@ public class PaginationTest {
     @Order(8)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Getting The Number Of Products While Iterating Over Pages")
-    public void PaginationTest2() throws InterruptedException {
+    public void PaginationTest() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
         portfolioPage = new PortfolioPage(driver);
@@ -217,5 +220,27 @@ public class PaginationTest {
         int actual = portfolioPage.GetProductNumber(maxPageNumber);
         Assertions.assertEquals(5, actual);
     }
+
+    @Test
+    @Order(9)
+    @Severity(SeverityLevel.NORMAL)
+    @DisplayName("Getting The Name Of Products While Iterating Over Pages")
+    public void PaginationTest2() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        int maxPageNumber = 10;
+        List<String> expected = new ArrayList<>(Arrays.asList("KIO-TAPE BRAND", "USE-LESS BRAND", "OSEN CLOCK", "SEAMLESS WATCH", "KIO TAPE"));
+        List<String> actual = portfolioPage.ListProductsName(maxPageNumber);
+        Assertions.assertEquals(expected, actual);
+    }
+
 
 }

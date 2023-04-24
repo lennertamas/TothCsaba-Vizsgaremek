@@ -4,7 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class PortfolioPage extends BasePage {
@@ -19,7 +22,7 @@ public class PortfolioPage extends BasePage {
 
     public final By PAGINATION_AREA_ABOVE = By.xpath("//*[@class='site-project-item-content']");
 
-    public final By PRODUCTS = By.xpath("site-project-item-thumb");
+    public final By PRODUCTS = By.xpath("//div[@class='site-project-item-thumb']");
 
     //public final By ACTIVE_PAGE_BUTTON = By.xpath("//*[@id=\"project\"]/div/div/div[5]/div/ul/li[@class='page-item active']");
     public final By ACTIVE_PAGE_BUTTON = By.xpath(" //*[@class='page-item active']");
@@ -55,7 +58,7 @@ public class PortfolioPage extends BasePage {
         //driver.findElement(ACTIVE_PAGE_BUTTON).getAttribute("href").;
     }
 
-    public void clickNext () throws InterruptedException {
+    public void clickNext() throws InterruptedException {
         WebElement body = driver.findElement(By.tagName("body"));
         for (int i = 0; i < 2; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
@@ -68,7 +71,8 @@ public class PortfolioPage extends BasePage {
         driver.findElement(NEXT_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-    public void clickPrevious () {
+
+    public void clickPrevious() {
         WebElement body = driver.findElement(By.tagName("body"));
         for (int i = 0; i < 3; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
@@ -77,7 +81,8 @@ public class PortfolioPage extends BasePage {
         driver.findElement(PREVIOUS_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-    public void clickLastPage () {
+
+    public void clickLastPage() {
         WebElement body = driver.findElement(By.tagName("body"));
         for (int i = 0; i < 3; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
@@ -88,7 +93,7 @@ public class PortfolioPage extends BasePage {
 
     }
 
-    public void clickFirstPage () throws InterruptedException {
+    public void clickFirstPage() throws InterruptedException {
         //WebElement body = driver.findElement(By.tagName("body"));
         //for (int i = 0; i < 2; i++) {
         //    body.sendKeys(Keys.PAGE_DOWN);
@@ -101,7 +106,8 @@ public class PortfolioPage extends BasePage {
         driver.findElement(FIRST_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
-    public int GetPageNumberMax (int maxPageNumber) throws InterruptedException {
+
+    public int GetPageNumberMax(int maxPageNumber) throws InterruptedException {
         WebElement body = driver.findElement(By.tagName("body"));
         for (int i = 0; i < 2; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
@@ -119,10 +125,12 @@ public class PortfolioPage extends BasePage {
             Thread.sleep(3000);
             driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
             pageNumber++;
-        } return pageNumber;
+        }
+        return pageNumber;
     }
 
     public int GetProductNumber(int maxPageNumber) throws InterruptedException {
+        //Actions a = new Actions(driver);
         WebElement body = driver.findElement(By.tagName("body"));
         for (int i = 0; i < 2; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
@@ -135,10 +143,13 @@ public class PortfolioPage extends BasePage {
         while (pageNumber < maxPageNumber && !driver.findElement(NEXT_BUTTON_PARENT).getAttribute("class").contains("disabled")) {
             driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
             driver.findElement(NEXT_BUTTON).click();
-            driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
-            Thread.sleep(3000);
+            Thread.sleep(2000);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            Thread.sleep(2000);
+            body.sendKeys(Keys.PAGE_DOWN);
+            driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
             scrollToElement(PRODUCTS);
-            Thread.sleep(3000);
+            Thread.sleep(2000);
             int newProductNumber = driver.findElements(PRODUCT_NAME).size();
             driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
             productNumber = productNumber + newProductNumber;
@@ -150,6 +161,68 @@ public class PortfolioPage extends BasePage {
         return productNumber;
 
     }
+
+    public List<String> ListProductsName(int maxPageNumber) throws InterruptedException {
+        List<String> productNames = new ArrayList<>();
+        int pageNumber = GetPageNumber();
+        while (pageNumber <= maxPageNumber) {
+                //&& !driver.findElement(NEXT_BUTTON_PARENT).getAttribute("class").contains("disabled"))
+            driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+            scrollToElement(PRODUCTS);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            List<WebElement> productNameElements = driver.findElements(PRODUCT_NAME);
+            for (WebElement productNameElement : productNameElements) {
+                productNames.add(productNameElement.getText());
+            }
+            if (pageNumber == maxPageNumber || driver.findElement(NEXT_BUTTON_PARENT).getAttribute("class").contains("disabled")) {
+                break;
+            }
+            driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+            Thread.sleep(3000);
+            scrollToElement(PAGINATION_AREA_ABOVE);
+            Thread.sleep(3000);
+            driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+            driver.findElement(NEXT_BUTTON).click();
+            Thread.sleep(2000);
+        }
+        return productNames;
+    }
+
+
+
+
+
+
+        /*WebElement body = driver.findElement(By.tagName("body"));
+        for (int i = 0; i < 2; i++) {
+            body.sendKeys(Keys.PAGE_DOWN);
+        }
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        int pageNumber = GetPageNumber();
+        List<String> productNames = new ArrayList<String>();
+        scrollToElement(PAGINATION_AREA_ABOVE);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        while (pageNumber < maxPageNumber && !driver.findElement(NEXT_BUTTON_PARENT).getAttribute("class").contains("disabled")) {
+            driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+            driver.findElement(NEXT_BUTTON).click();
+            Thread.sleep(2000);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            Thread.sleep(2000);
+            body.sendKeys(Keys.PAGE_DOWN);
+            driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+            scrollToElement(PRODUCTS);
+            Thread.sleep(2000);
+            int newProductNumber = driver.findElements(PRODUCT_NAME).size();
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+            Thread.sleep(3000);
+            scrollToElement(PAGINATION_AREA_ABOVE);
+            Thread.sleep(3000);
+            driver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
+        }
+        return productNumber;
+
+    }*/
+
 
 }
 

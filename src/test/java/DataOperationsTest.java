@@ -99,7 +99,7 @@ public class DataOperationsTest {
         loginPage.LoginFunction(validUserName, validPassword);
         Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
         List<Map<String, String>>actual = landingPage.getComments();
-        //landingPage.writeCommentsToFile(actual, "tester.txt");
+        landingPage.writeCommentsToFile(actual, "CollectedComments.txt");
         List<Map<String, String>>expected = landingPage.readCommentsFile();
 
         //for (Map<String, String> comment : expected) {
