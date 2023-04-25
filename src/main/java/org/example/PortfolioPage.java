@@ -17,12 +17,13 @@ public class PortfolioPage extends BasePage {
 
     public final String url = "https://lennertamas.github.io/roxo/portfolio.html";
 
+    public final By BUTTON_ARROW_DOWN = By.xpath("//img[@alt=\"arrow-down\"]");
     public final By PAGINATION_AREA = By.xpath("//ul[@class='pagination']");
     //public final By NEXT_BUTTON = By.xpath("//a[@aria-label='Next']/span");
 
-    public final By PAGINATION_AREA_ABOVE = By.xpath("//*[@class='site-project-item-content']");
+    public final By PAGINATION_AREA_ABOVE = By.xpath("//*[@class='site-project-item-thumb']");
 
-    public final By PRODUCTS = By.xpath("//div[@class='site-project-item-thumb']");
+    public final By PRODUCTS = By.xpath("//div[@class='site-project-item-content']");
 
     //public final By ACTIVE_PAGE_BUTTON = By.xpath("//*[@id=\"project\"]/div/div/div[5]/div/ul/li[@class='page-item active']");
     public final By ACTIVE_PAGE_BUTTON = By.xpath(" //*[@class='page-item active']");
@@ -58,7 +59,79 @@ public class PortfolioPage extends BasePage {
         //driver.findElement(ACTIVE_PAGE_BUTTON).getAttribute("href").;
     }
 
-    public void clickNext() throws InterruptedException {
+    public boolean GoToNextButton() throws InterruptedException {
+        Thread.sleep(3000);
+        scrollToElement(PAGINATION_AREA_ABOVE);
+        Thread.sleep(3000);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        scrollToElement(PRODUCT_NAME);
+        Thread.sleep(4000);
+        try {
+            driver.findElement(NEXT_BUTTON).click();
+        } catch (
+            Exception e) {
+            return false;
+        } return true;
+
+        /*Actions a = new Actions(driver);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        //driver.findElement(BUTTON_ARROW_DOWN).click();
+        //driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        a.sendKeys(Keys.PAGE_DOWN);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        scrollToElement(NEXT_BUTTON);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);*/
+    }
+
+    public boolean GoToLastButton() throws InterruptedException {
+        Thread.sleep(3000);
+        scrollToElement(PAGINATION_AREA_ABOVE);
+        Thread.sleep(3000);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        scrollToElement(PRODUCT_NAME);
+        Thread.sleep(4000);
+        try {
+            driver.findElement(LAST_BUTTON).click();
+        } catch (
+                Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean GoToPreviousButton() throws InterruptedException {
+        Thread.sleep(3000);
+        scrollToElement(PAGINATION_AREA_ABOVE);
+        Thread.sleep(3000);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        scrollToElement(PRODUCT_NAME);
+        Thread.sleep(4000);
+        try {
+            driver.findElement(PREVIOUS_BUTTON).click();
+        } catch (
+                Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean GoToFirstButton() throws InterruptedException {
+        Thread.sleep(3000);
+        scrollToElement(PAGINATION_AREA_ABOVE);
+        Thread.sleep(3000);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        scrollToElement(PRODUCT_NAME);
+        Thread.sleep(4000);
+        try {
+            driver.findElement(FIRST_BUTTON).click();
+        } catch (
+                Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+        public void clickNext() throws InterruptedException {
         WebElement body = driver.findElement(By.tagName("body"));
         for (int i = 0; i < 2; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
@@ -82,15 +155,16 @@ public class PortfolioPage extends BasePage {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
-    public void clickLastPage() {
+    public void clickLastPage() throws InterruptedException {
         WebElement body = driver.findElement(By.tagName("body"));
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             body.sendKeys(Keys.PAGE_DOWN);
         }
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        scrollToElement(PAGINATION_AREA_ABOVE);
+        driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
         driver.findElement(LAST_BUTTON).click();
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
     }
 
     public void clickFirstPage() throws InterruptedException {
@@ -146,7 +220,7 @@ public class PortfolioPage extends BasePage {
             Thread.sleep(2000);
             driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
             Thread.sleep(2000);
-            body.sendKeys(Keys.PAGE_DOWN);
+            //body.sendKeys(Keys.PAGE_DOWN);
             driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
             scrollToElement(PRODUCTS);
             Thread.sleep(2000);

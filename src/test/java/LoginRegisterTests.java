@@ -5,11 +5,13 @@ import org.example.LandingPage;
 import org.example.LoginPage;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 
 import java.time.Duration;
+import java.util.concurrent.TimeUnit;
 
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -59,12 +61,64 @@ public class LoginRegisterTests {
         loginPage = new LoginPage(driver);
         loginPage.Navigate();
         loginPage.AcceptTermsAndConditions();
+        loginPage.ClickOnRegisterButton();
         loginPage.RegisterBasic("","","","");
         Assertions.assertFalse(loginPage.RegisterAlertIsDisplayed());
     }
 
     @Test
     @Order(2)
+    @Severity(SeverityLevel.CRITICAL)
+    @DisplayName("Register with invalid e-mail addresses")
+    public void RegisterTest2() {
+        loginPage = new LoginPage(driver);
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.ClickOnRegisterButton();
+        SoftAssert softAssert = new SoftAssert();
+        loginPage.RegisterBasic("","ehynot","why.not.gmail.com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","aisbiggerthanb","a>b@gmail.com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","klassz","classof99@","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","nicetry","@gmail.com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","shouldwork","new user@gmail.com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","anotherone","perfect@gmail,com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","nevergiveup","newuser@com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","theendisnear",".newuser@gmail.com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        loginPage.ClickOnRegisterButtonRepeat();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        loginPage.RegisterBasic("","lastone","new..user@gmail.com","");
+        softAssert.assertFalse(loginPage.RegisterAlertIsDisplayed());
+        softAssert.assertAll();
+    }
+
+    //SoftAssert softAssert = new SoftAssert();
+    //        basePage.navigate();
+    //        softAssert.assertTrue(basePage.isLogoDisplayed(), "logo is not displayed");
+
+    @Test
+    @Order(3)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Register with username and password and login with registered parameters")
     public void RegisterAndLoginTest1 () {
@@ -74,6 +128,7 @@ public class LoginRegisterTests {
         String validPassword = "22yrraL";
         loginPage.Navigate();
         loginPage.AcceptTermsAndConditions();
+        loginPage.ClickOnRegisterButton();
         loginPage.RegisterBasic(validUserName,validPassword,"","");
         Assertions.assertTrue(loginPage.RegisterAlertIsDisplayed());
         loginPage.LoginFromRegister();
@@ -83,7 +138,7 @@ public class LoginRegisterTests {
 
 
     @Test
-    @Order(3)
+    @Order(4)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Register with username and password and try to login with wrong password")
     public void RegisterAndLoginTest2 () {
@@ -93,6 +148,7 @@ public class LoginRegisterTests {
         String invalidPassword = "12itsiP";
         loginPage.Navigate();
         loginPage.AcceptTermsAndConditions();
+        loginPage.ClickOnRegisterButton();
         loginPage.RegisterBasic(validUserName,validPassword,"","");
         Assertions.assertTrue(loginPage.RegisterAlertIsDisplayed());
         loginPage.LoginFromRegister();
@@ -101,7 +157,7 @@ public class LoginRegisterTests {
     }
 
     @Test
-    @Order(4)
+    @Order(5)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Try to login with wrong username")
     public void LoginTest1 () {
@@ -116,7 +172,7 @@ public class LoginRegisterTests {
 
     @Test
     @Disabled
-    @Order(5)
+    @Order(6)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Try to login with valid username and password")
     public void LoginTest2 () {

@@ -17,6 +17,8 @@ public class LoginPage extends BasePage{
     private final By ACCEPT_BUTTON = By.id("terms-and-conditions-button");
 
     private final By REGISTER_BUTTON = By.id("register-form-button");
+
+    private final By REGISTER_BUTTON_REPEAT = By.xpath("//div[@id='register']/button[@id=\"register-form-button\"]");
     private final By REGISTER_USERNAME_FIELD = By.id("register-username");
     private final By REGISTER_PASSWORD_FIELD = By.id("register-password");
     private final By REGISTER_EMAIL_FIELD = By.id("register-email");
@@ -46,8 +48,22 @@ public class LoginPage extends BasePage{
         //}
     }
 
-    public void RegisterBasic(String username, String password, String email, String description) {
+    public void ClickOnRegisterButton() {
         driver.findElement(REGISTER_BUTTON).click();
+    }
+
+    public void ClickOnRegisterButtonRepeat() {
+        driver.findElement(REGISTER_BUTTON_REPEAT).click();
+        driver.findElement(REGISTER_EMAIL_FIELD).clear();
+        driver.findElement(REGISTER_PASSWORD_FIELD).clear();
+    }
+
+    public void ClearInputFields() {
+        driver.findElement(REGISTER_EMAIL_FIELD).clear();
+        driver.findElement(REGISTER_PASSWORD_FIELD).clear();
+    }
+
+    public void RegisterBasic(String username, String password, String email, String description) {
         driver.findElement(REGISTER_USERNAME_FIELD).sendKeys(username);
         driver.findElement(REGISTER_PASSWORD_FIELD).sendKeys(password);
         driver.findElement(REGISTER_EMAIL_FIELD).sendKeys(email);

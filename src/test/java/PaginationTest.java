@@ -1,4 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.checkerframework.checker.units.qual.A;
 import org.example.AboutPage;
 import org.example.LandingPage;
 import org.example.LoginPage;
@@ -83,7 +84,7 @@ public class PaginationTest {
     @Order(3)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Checking If Click On Last Button Functions Perfectly")
-    public void GetLastPageNumberTest() {
+    public void GetLastPageNumberTest() throws InterruptedException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
         portfolioPage = new PortfolioPage(driver);
@@ -94,9 +95,9 @@ public class PaginationTest {
         loginPage.LoginFunction(validUserName, validPassword);
         Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
         landingPage.GoToPortfolio();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         portfolioPage.clickLastPage();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         int actual = portfolioPage.GetPageNumber();
         Assertions.assertEquals(2, actual);
     }
@@ -200,9 +201,97 @@ public class PaginationTest {
         Assertions.assertEquals(2, actual);
     }
 
-
     @Test
     @Order(8)
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("Checking if Next Button is enabled on Last Page")
+    public void CheckNextButtonOnLastPageTest() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        portfolioPage.clickLastPage();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        boolean actual = portfolioPage.GoToNextButton();
+        Assertions.assertFalse(actual);
+    }
+
+    @Test
+    @Order(9)
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("Checking if Last Button is enabled on Last Page")
+    public void CheckLastButtonOnLastPageTest() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        portfolioPage.clickLastPage();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        boolean actual = portfolioPage.GoToLastButton();
+        Assertions.assertFalse(actual);
+    }
+
+    @Test
+    @Order(10)
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("Checking if Previous Button is enabled on First Page")
+    public void CheckPreviousButtonOnFirstPageTest() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        portfolioPage.clickFirstPage();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        boolean actual = portfolioPage.GoToPreviousButton();
+        Assertions.assertFalse(actual);
+    }
+
+    @Test
+    @Order(11)
+    @Severity(SeverityLevel.MINOR)
+    @DisplayName("Checking if First Button is enabled on First Page")
+    public void CheckFirstButtonOnFirstPageTest() throws InterruptedException {
+        loginPage = new LoginPage(driver);
+        landingPage = new LandingPage(driver);
+        portfolioPage = new PortfolioPage(driver);
+        String validUserName = "beckz";
+        String validPassword = "30y123";
+        loginPage.Navigate();
+        loginPage.AcceptTermsAndConditions();
+        loginPage.LoginFunction(validUserName, validPassword);
+        Assertions.assertEquals("https://lennertamas.github.io/roxo/landing.html", landingPage.GetURL());
+        landingPage.GoToPortfolio();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        portfolioPage.clickFirstPage();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        boolean actual = portfolioPage.GoToFirstButton();
+        Assertions.assertFalse(actual);
+    }
+
+
+    @Test
+    @Order(12)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Getting The Number Of Products While Iterating Over Pages")
     public void PaginationTest() throws InterruptedException {
@@ -222,7 +311,7 @@ public class PaginationTest {
     }
 
     @Test
-    @Order(9)
+    @Order(13)
     @Severity(SeverityLevel.NORMAL)
     @DisplayName("Getting The Name Of Products While Iterating Over Pages")
     public void PaginationTest2() throws InterruptedException {
