@@ -33,7 +33,6 @@ public class DataOperationsTest {
         driver = BaseTest.getWebDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-        //loginPage = new LoginPage(driver);
     }
 
     @Test
@@ -91,7 +90,6 @@ public class DataOperationsTest {
     public void DataReadTest3 () throws InterruptedException, IOException {
         loginPage = new LoginPage(driver);
         landingPage = new LandingPage(driver);
-        //aboutPage = new AboutPage(driver);
         String validUserName = "beckz";
         String validPassword = "30y123";
         loginPage.Navigate();
@@ -101,41 +99,8 @@ public class DataOperationsTest {
         List<Map<String, String>>actual = landingPage.getComments();
         landingPage.writeCommentsToFile(actual, "CollectedComments.txt");
         List<Map<String, String>>expected = landingPage.readCommentsFile();
-
-        //for (Map<String, String> comment : expected) {
-          //  String name = comment.get("Name");
-           // if (name.startsWith("=")) {
-           //     comment.put("Name", name.substring(1));
-           // }
-           // if (name.startsWith("=")) {
-           //     comment.put("Name", name.substring(1));
-
-        //assertEquals(commentsFromWeb, commentsFromFiles);
-
-
-        //for (Map<String, String> map : actual) {
-          //  Assertions.assertTrue(expected.contains(map));
-        //}
-        //for (Map<String, String> map : expected) {
-          //  Assertions.assertTrue(actual.contains(map));
-        //}
-
         Assertions.assertEquals(expected, actual);
     }
-
-
-    @Test
-    @Disabled
-    public void DataRead () throws IOException {
-        String fileContents = "";
-        String line;
-        BufferedReader br = new BufferedReader(new FileReader("Comments.txt"));
-        while ((line = br.readLine()) != null) {
-            fileContents += line + "\n";
-        }
-        System.out.println("File contents:\n" + fileContents);
-    }
-
 
     @AfterEach
     public void TearDown () {

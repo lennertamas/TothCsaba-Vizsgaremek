@@ -26,7 +26,7 @@ public class LandingPage extends BasePage {
     public final By ABOUT_BUTTON = By.xpath("//li[@class='nav-item']/a[contains(@href, 'about')]");
 
     public final By OPINION_AREA = By.xpath("//section[@class=\"site-testimonial\"]");
-    //public final By OPINION_AREA = By.xpath("//section[4]/div/div/div[1]/div/h2");
+
     public final By OPINIONS_PERSONS = By.xpath("//section[4]/div/div/div[position() > 1]/div");
 
     public final By PORTFOLIO_BUTTON = By.xpath("//nav/div/div/ul/li[3]/a");
@@ -62,13 +62,12 @@ public class LandingPage extends BasePage {
     public void writeCommentsToFile(List<Map<String, String>> commentList, String filePath) throws IOException {
         FileWriter writer = new FileWriter(filePath);
         for (Map<String, String> comment : commentList) {
-            writer.write("Name: " + comment.get("\"=Name") + "\n");
+            writer.write("Name: " + comment.get("Name") + "\n");
             writer.write("Occupation: " + comment.get("Occupation") + "\n");
             writer.write("Comment: " + comment.get("Comment") + "\n\n");
         }
         writer.close();
     }
-
 
     public List<Map<String, String>> getComments() throws InterruptedException, IOException {
         List<Map<String, String>> commentList = new ArrayList<>();
@@ -86,7 +85,6 @@ public class LandingPage extends BasePage {
             commentList.add(person);
         }
         return commentList;
-
     }
 
     public List<Map<String, String>> readCommentsFile() throws IOException {
@@ -106,8 +104,4 @@ public class LandingPage extends BasePage {
         }
         return commentsFromFiles;
     }
-
-
-
-
 }
