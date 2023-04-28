@@ -54,8 +54,10 @@ public class LoginPage extends BasePage{
 
     public void ClickOnRegisterButtonRepeat() {
         driver.findElement(REGISTER_BUTTON_REPEAT).click();
+        driver.findElement(REGISTER_USERNAME_FIELD).clear();
         driver.findElement(REGISTER_EMAIL_FIELD).clear();
         driver.findElement(REGISTER_PASSWORD_FIELD).clear();
+        driver.findElement(REGISTER_DESCRIPTION_FIELD).clear();
     }
 
     public void ClearInputFields() {

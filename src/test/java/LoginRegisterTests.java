@@ -113,10 +113,6 @@ public class LoginRegisterTests {
         softAssert.assertAll();
     }
 
-    //SoftAssert softAssert = new SoftAssert();
-    //        basePage.navigate();
-    //        softAssert.assertTrue(basePage.isLogoDisplayed(), "logo is not displayed");
-
     @Test
     @Order(3)
     @Severity(SeverityLevel.NORMAL)

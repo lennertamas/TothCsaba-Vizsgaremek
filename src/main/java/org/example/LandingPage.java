@@ -34,6 +34,7 @@ public class LandingPage extends BasePage {
 
     public final By MESSAGE_BUTTON = By.xpath("//*[@data-text='Get in touch']");
 
+    public final By PROFILE_BUTTON = By.id("profile-btn");
 
     public String GetURL() {
         return (driver.getCurrentUrl());
@@ -52,6 +53,10 @@ public class LandingPage extends BasePage {
 
     public void GoToMessage() {
         driver.findElement(MESSAGE_BUTTON).click();
+    }
+
+    public void GoToProfile() {
+        driver.findElement(PROFILE_BUTTON).click();
     }
 
     public void writeCommentsToFile(List<Map<String, String>> commentList, String filePath) throws IOException {
