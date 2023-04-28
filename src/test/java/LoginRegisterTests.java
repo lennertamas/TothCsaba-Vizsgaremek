@@ -21,16 +21,16 @@ public class LoginRegisterTests {
     LoginPage loginPage;
     LandingPage landingPage;
 
-   /* @BeforeEach
+    @BeforeEach
     void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = BaseTest.getWebDriver();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         //loginPage = new LoginPage(driver);
-    } */
+    }
 
-
+    /*
     @BeforeEach
     public void init() {
         WebDriverManager.chromedriver().setup();
@@ -50,8 +50,7 @@ public class LoginRegisterTests {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
 
         //wait = new WebDriverWait(driver, 10);
-
-    }
+    } */
 
     @Test
     @Order(1)
